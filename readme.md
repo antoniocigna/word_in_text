@@ -16,7 +16,7 @@ parameters:
 -	origText:  the text to Change
 -	word:      the word to look for in the text
 -	spanClass: the class to put in the span to highlight a word	
--	charList:  list of the alphabetic characters to add to the ascii a-z (eg. german vocals with umlaut), no need to list bothe lower and uppercase (only lowercase are tested)     
+-	charList:  list of the alphabetic characters to add to the ascii a-z (eg. german vocals with umlaut), no need to list both the lower and uppercase (all strings are changed in lowercase before being tested)     
 
 eg. 
 	var GermanText  = highlight_aWord_inText(inpText2, aWord2, boldClass2, 'äöüß'); 

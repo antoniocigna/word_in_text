@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="author" content="Antonio Cigna">
+      <title>prova</title>
+      <style>
+         .boldClass1 {
+			 background-color:yellow;	
+			 font-weight:bold;
+         }
+      </style>
+   </head>
+   <body>
+		<div>
+			<h2>highlight_aWord_inText</h2>
+			a script function to highlight all occurrences of a word in a text line
+			<h3>a demostration of use</h3>
+			<xmp>
+				<style>
+					.boldClass1 {
+						background-color:yellow;	
+						font-weight:bold;
+					}
+				</style>
+				var EnglishText = highlight_aWord_inText(inpText1, aWord1, boldClass1);
+				
+				var GermanText  = highlight_aWord_inText(inpText2, aWord2, boldClass2, 'äöüß'); 
+				
+			</xmp>
+			<br> 
+			<br>
+			 <b>input</b><br>
+			 <div id="inp1">The Quick Brown Fox?  It runs and jumps. The little brown fox.</div>
+			 <div id="inp2">Ich fahre regelmäßig mit dem Zug.</div>
+			 <br><br>	  
+			 <b>output</b><br>
+			 <div id="out1"></div>
+			 <div id="out2"></div>
+		</div>
+		<script src="./word_in_text.js"></script>
+   </body>
+</html>

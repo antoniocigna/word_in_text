@@ -6,7 +6,6 @@
 	  //----------------------------------------------
 	  function highlight_aWord_inText(origText, word, spanClass, charList) {
 	      /*
-	      /*  
 	      	purpose: highlight all occurrences of a word in a text line
 	      	
 	      	method:
@@ -17,10 +16,11 @@
 	      		4) look for the transformed word s_word in the changed text s_text_LwChg and use the found positions to fish out the pieces of the original text origText
 	      		5) obtain a new line from the original inserting the words to highlight in a <span> element together with the className passed as parameter	
 	      	parameters:
-	      		origText:  the text to Change
-	      		word:      the word to look for in the text
-	      		spanClass: the class to put in the span to highlight a word	
-	      		charList:  list of the alphabetic characters to add to the ascii a-z (eg. german vocals with umlaut), no need to list bothe lower and uppercase (only lowercase are tested)     
+	      		origText:  	the text to Change
+	      		word:      	the word to look for in the text
+	      		spanClass: 	the class to put in the span to highlight a word	
+	      		charList:  	list of the alphabetic characters to add to the ascii a-z (eg. german vocals with umlaut), 
+							there is no need to list bothe lower and uppercase (only lowercase are tested)     
 	      */
 		  	
 	      if (word) word = (""+word).trim();                 else return origText;
@@ -62,8 +62,158 @@
 
 	  } // end of highlight	
 
-	  //----------------------
+	  
+	  //----------------------------------------------
+	  
+	  function getListOfWords_inText(origText, charList) {
+	      /*
+	      	purpose: make a list of the words in a text
+	     
+			parameters:
+	      		origText:  	the text
+			 	charList:  	list of the alphabetic characters to add to the ascii a-z (eg. german vocals with umlaut), 
+							there is no need to list bothe lower and uppercase (only lowercase are tested)     
+	      */	
+		 
+	      if (charList) {
+	          charList = "a-z" + (""+charList).trim();
+	      } else {
+			  charList = "a-z"; 
+		  }	  
+	      var regExStrSpc  = "[^" + charList + "]";
+		  var regExStrWrd  = "["  + charList + "]";
+	      var regExSpace   = new RegExp(regExStrSpc, "g");		  
+	      var regExWord    = new RegExp(regExStrWrd, "g");
+		 
+	      var text_Chg = origText.toLowerCase().replace(regExSpace, " ") + " " + "W";
+		  
+		  text_Chg     = text_Chg.replace(regExWord,  "W");
+		  
+	      var fSpc = 0, fWrd=0;
+		  
+	      var listWord = [];
+	      //--------------------------------------
+		  var lenOrig = origText.length; 
+	      for (var s = 0; s < lenOrig; s++) {
+	          fSpc = text_Chg.indexOf(" ", fWrd);
+	          if (fSpc < 0) break;
+			  if (fSpc >= lenOrig) fSpc = lenOrig;
+			  if (fSpc > fWrd) {
+				  listWord.push(origText.substring(fWrd, fSpc) ); 
+			  }	  
+			  fWrd = text_Chg.indexOf("W", fSpc);
+			  if (fWrd < 0 ) break;
+			  if (fWrd >= lenOrig) fWrd = lenOrig;
+			  //if (fWrd > fSpc)  console.log(fSpc + " " + fWrd + " ==>" + origText.substring(fSpc, fWrd) + "<==" );  			  
+	      }
+		  if (fWrd >=0 ) {
+				fSpc = text_Chg.indexOf(" ", fWrd);
+				if (fSpc >= lenOrig) fSpc = lenOrig;
+				if (fSpc > fWrd) {
+					listWord.push(origText.substring(fWrd, fSpc) ); 
+				}	
+		  }
+			
+		
+	      return listWord; 
 
+	  } // end of getListOfWords_inText
+	  //----------------------
+	  
+	   
+	  //----------------------------------------------
+	  
+	  function transform_inButton_EachWord_of_aText(origText, buttonElement, charList) {
+	      /*
+	      	purpose: make a list of the words in a text
+	     
+			parameters:
+	      		origText:  	the text
+				buttonElement: the button prototype eg. <button class="buttonClass" onclick="onClickFunction(this)"></button> 
+			 	charList:  	list of the alphabetic characters to add to the ascii a-z (eg. german vocals with umlaut), 
+							there is no need to list bothe lower and uppercase (only lowercase are tested)     
+	      */	
+		  if (buttonElement == undefined) buttonElement = "";
+		  buttonElement = (""+buttonElement).trim(); 
+		  
+		  if (buttonElement.indexOf("<button") < 0) buttonElement = '<button class="buttonClass" onclick="onClickFunction(this)"></button>';
+	      if (charList) {
+	          charList = "a-z" + (""+charList).trim();
+	      } else {
+			  charList = "a-z"; 
+		  }	  
+	      var regExStrSpc  = "[^" + charList + "]";
+		  var regExStrWrd  = "["  + charList + "]";
+	      var regExSpace   = new RegExp(regExStrSpc, "g");		  
+	      var regExWord    = new RegExp(regExStrWrd, "g");
+		 
+	      var text_Chg = origText.toLowerCase().replace(regExSpace, " ") + " " + "W";
+		  
+		  text_Chg     = text_Chg.replace(regExWord,  "W");
+		  
+	      var fSpc = 0, fWrd=0;
+		  
+	      var listWord = [];
+		  var outLine="";
+		  
+		
+		  var j= buttonElement.indexOf('</button');
+		  if (j < 0) return [""];
+		  var button1 = buttonElement.substring(0,j);
+		  var button2 = '</button>'  
+		  
+	      //--------------------------------------
+		  var lenOrig = origText.length; 
+	      for (var s = 0; s < lenOrig; s++) {
+	          fSpc = text_Chg.indexOf(" ", fWrd);
+	          if (fSpc < 0) break;
+			  if (fSpc >= lenOrig) fSpc = lenOrig;			 
+			  if (fSpc > fWrd) {
+					outLine += button1 + origText.substring(fWrd, fSpc) + button2; 
+				}	
+			  fWrd = text_Chg.indexOf("W", fSpc);
+			  if (fWrd < 0 ) break;
+			  if (fWrd >= lenOrig) fWrd = lenOrig;
+			  if (fWrd > fSpc) {
+				  outLine += origText.substring(fSpc, fWrd);  	
+			  }		
+	      }
+		  if (fWrd >=0 ) {
+				fSpc = text_Chg.indexOf(" ", fWrd);
+				if (fSpc >= lenOrig) fSpc = lenOrig;
+				if (fSpc > fWrd) {
+					outLine += button1 + origText.substring(fWrd, fSpc) + button2; 
+				}	
+		  }
+			
+		
+	      return outLine; 
+
+	  } // end of getListOfWords_inText
+	  //----------------------
+	  
+	  
+	//=======================================
+	function testList(inp1) {
+		var text1 = document.getElementById(inp1).innerHTML;
+		var spanClass1 = "boldClass1";
+	    var charList1 = "üßàèéì";
+		
+		var wordList = getListOfWords_inText(text1, charList1);
+		
+		console.log(text1,"\n\t" +  wordList.join("\n\t") );	
+		
+		console.log( "\n-------------------------------------------------\n");
+		
+		var buttonElement = '<button class="buttonClass" onclick="onClickFunction(this)"></button>';
+		var outLine = transform_inButton_EachWord_of_aText(text1, buttonElement,  'äöüß'); 
+		console.log("text = ", text1); 
+		console.log("outline= ", outLine); 
+		
+	}	
+	  
+	 
+	//=================================	
 	  function test(word1, inp1, out1) {
 	      /*
 			<style>
@@ -84,10 +234,9 @@
 		*/
 	      var text1 = document.getElementById(inp1).innerHTML;
 
-	      var spanClass1 = "boldClass1";
-	      var charList1 = "üßàèéì";
+	      var spanClass1 = "boldClass1";	    
 
-	      document.getElementById(out1).innerHTML = highlight_aWord_inText(text1, word1, spanClass1, charList1);
+	      document.getElementById(out1).innerHTML = highlight_aWord_inText(text1, word1, spanClass1, 'äöüß'); 
 
 	  } // and test
 	  //--------------------------------------
@@ -95,3 +244,4 @@
 	  //test('fox', 'inp1', 'out1');
 	  //test('zug', 'inp2', 'out2');
 	  //----------------------------------------
+	  

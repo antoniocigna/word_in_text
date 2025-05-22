@@ -1,3 +1,11 @@
+word_in_text
+------------
+
+There are 3 functions in this script file to extract word from a text
+- highlight_aWord_inText
+- getListOfWords_inText
+- transform_inButton_EachWord_of_aText
+
 highlight_aWord_inText
 ----------------------
 highlight_aWord_inText: a script function to  highlight all occurrences of a word in a text line
@@ -20,5 +28,20 @@ parameters:
 
 eg. 
 	var GermanText  = highlight_aWord_inText(inpText2, aWord2, boldClass2, 'äöüß'); 
+
+
+
+getListOfWords_inText
+---------------------
+purpose: make a list of the words in a text
+
+
+
+transform_inButton_EachWord_of_aText
+------------------------------------
+purpose: trasform each word found in a test in a button
+
+
+
 
 **Antonio Cigna**

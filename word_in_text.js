@@ -123,7 +123,7 @@
 	   
 	  //----------------------------------------------
 	  
-	  function transform_inButton_EachWord_of_aText(origText, buttonElement, charList) {
+	  function transform_intoButton_EachWord_of_aText(origText, buttonElement, charList) {
 	      /*
 	      	purpose: make a list of the words in a text
 	     
@@ -206,7 +206,7 @@
 		console.log( "\n-------------------------------------------------\n");
 		
 		var buttonElement = '<button class="buttonClass" onclick="onClickFunction(this)"></button>';
-		var outLine = transform_inButton_EachWord_of_aText(text1, buttonElement,  'äöüß'); 
+		var outLine = transform_intoButton_EachWord_of_aText(text1, buttonElement,  'äöüß'); 
 		console.log("text = ", text1); 
 		console.log("outline= ", outLine); 
 		
